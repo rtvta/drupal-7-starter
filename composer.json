@@ -1,0 +1,93 @@
+{
+    "name": "rtvta/drupal7-composer-starter",
+    "description": "Project template for Drupal 7 projects with composer",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Roman Tiagni",
+            "role": "Developer"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/7"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.5",
+        "ext-gd": "*",
+        "ext-xml": "*",
+        "ext-json": "*",
+        "ext-openssl": "*",
+        "ext-curl": "*",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "composer/installers": "^1.2",
+        "cweagans/composer-patches": "^1.6",
+        "drupal-composer/preserve-paths": "^0.1",
+        "drupal/drupal": "7.*",
+        "drupal/composer_autoloader": "^1.0",
+        "drush/config-extra": "*",
+        "drush/drush": "~8.0",
+        "webflo/drupal-finder": "^1.0.0",
+        "webmozart/path-util": "^2.3"
+    },
+    "conflict": {
+        "drupal/core": "8.*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "classmap": [
+            "scripts/composer/ScriptHandler.php"
+        ]
+    },
+    "scripts": {
+        "pre-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "pre-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "post-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ],
+        "post-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ],
+        "post-create-project-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
+        ]
+    },
+    "extra": {
+        "patches": {
+            "cweagans/composer-patches": {
+                "Call the preserve paths hooks" : "https://github.com/SebCorbin/composer-patches/commit/1cb9bacba51f8bba0c5f3f322c3bb61e4ceae974.patch"
+            }
+        },
+        "installer-paths": {
+            "htdocs/": ["type:drupal-core"],
+            "htdocs/profiles/{$name}/": ["type:drupal-profile"],
+            "htdocs/sites/all/drush/{$name}/": ["type:drupal-drush"],
+            "htdocs/sites/all/libraries/{$name}/": ["type:drupal-library"],
+            "htdocs/sites/all/modules/contrib/{$name}/": ["type:drupal-module"],
+            "htdocs/sites/all/themes/contrib/{$name}/": ["type:drupal-theme"]
+        },
+        "preserve-paths": [
+            "htdocs/sites/all/drush",
+            "htdocs/sites/all/libraries",
+            "htdocs/sites/all/modules/contrib",
+            "htdocs/sites/all/modules/custom",
+            "htdocs/sites/all/modules/features",
+            "htdocs/sites/all/themes/contrib",
+            "htdocs/sites/all/themes/custom",
+            "htdocs/sites/all/translations",
+            "htdocs/sites/default"
+        ]
+    }
+}
